@@ -21,6 +21,4 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
     Page<Book> findByPriceBetween(BigDecimal lowPrice, BigDecimal highPrice, Pageable pageable);
 
     List<Book> findByIdIn(List<Long> bookIds);
-
-    List<Book> findByIdIn(List<Long> bookIds, Sort sort);
 }

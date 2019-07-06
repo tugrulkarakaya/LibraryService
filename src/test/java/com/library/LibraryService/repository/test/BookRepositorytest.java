@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -113,7 +115,36 @@ public class BookRepositorytest {
 						
 		assertThat(founds1.getTotalElements()).isEqualTo(2);
 		assertThat(founds2.getTotalElements()).isEqualTo(4);
-		assertThat(founds3.getTotalElements()).isEqualTo(0);
+		assertThat(founds3.getTotalElements()).isEqualTo(0);		
+	}
+	
+	
+	@Test
+	public void whenFindByIdIn() {
+		Book book1 = new Book("Book1", "Author1", LocalDate.now(), new BigDecimal(15));
+		Book book2 = new Book("Book1", "Author1", LocalDate.now(), new BigDecimal(22));
+		Book book3 = new Book("Book1", "Author1", LocalDate.now(), new BigDecimal(33));
+		Book book4 = new Book("Book1", "Author1", LocalDate.now(), new BigDecimal(45));
+		
+		book1 = entityManager.persist(book1);
+		book2 = entityManager.persist(book2);
+		book3 = entityManager.persist(book3);
+		book4 = entityManager.persist(book4);
+		
+		entityManager.flush();
+		
+		Pageable pageable = PageRequest.of(1,  100, Sort.Direction.DESC, "publishedDate");
+		
+		Optional<Book> found1 = bookRepository.findById(book1.getId());
+		
+		ArrayList<Long> Ids = new ArrayList<Long>();
+		Ids.add(book2.getId());
+		Ids.add(book3.getId());
+		
+		List<Book> founds2 = bookRepository.findByIdIn(Ids);
+						
+		assertThat(found1.orElseThrow(AssertionFailedError::new).getAuthor()).isEqualTo(book1.getAuthor());
+		assertThat(founds2.size()).isEqualTo(2);
 		
 	}
 }
