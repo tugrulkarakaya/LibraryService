@@ -33,14 +33,14 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
 		
 		List<Predicate> predicates = new ArrayList<>();
 		
-		if(bookRequest.getAuthorFilter() != null && bookRequest.getAuthorFilter().strip().length()>0)
+		if(bookRequest.getAuthorFilter() != null && bookRequest.getAuthorFilter().trim().length()>0)
 			predicates.add(cb.like(book.get("author"), bookRequest.getAuthorFilter()));
 		
-		if(bookRequest.getNameFilter() != null && bookRequest.getNameFilter().strip().length()>0)
+		if(bookRequest.getNameFilter() != null && bookRequest.getNameFilter().trim().length()>0)
 			predicates.add(cb.like(book.get("name"), bookRequest.getNameFilter()));		
 		
 		//If user sends filter text and any either name and author together this filter moght end with empty result. this is just for exercise purposes and needs to be improed and devloepd better.
-		if(bookRequest.getFilter() != null && bookRequest.getFilter().strip().length()>0) {
+		if(bookRequest.getFilter() != null && bookRequest.getFilter().trim().length()>0) {
 			predicates.add(cb.or(cb.like(book.get("author"), bookRequest.getFilter()), 
 									   cb.like(book.get("name"), bookRequest.getFilter())
 									  ));			
