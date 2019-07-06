@@ -15,6 +15,8 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 	Optional<Book> findById(Long bookId);	
 	
 	Page<Book> findByAuthor(String author, Pageable pageable);
+	
+	Page<Book> findByName(String name, Pageable pageable);
     
     Page<Book> findByPriceBetween(BigDecimal lowPrice, BigDecimal highPrice, Pageable pageable);
 
