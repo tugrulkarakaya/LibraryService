@@ -21,6 +21,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.library.LibraryService.model.Book;
+import com.library.LibraryService.payload.book.BookResponse;
+import com.library.LibraryService.payload.book.GetAllBooksRequest;
 import com.library.LibraryService.repository.BookRepository;
 
 import junit.framework.AssertionFailedError;
@@ -118,6 +120,35 @@ public class BookRepositorytest {
 		assertThat(founds3.getTotalElements()).isEqualTo(0);		
 	}
 	
+	@Test
+	public void whenGetAll_thenReturnBookList() {
+		Book book1 = new Book("BookA", "AuthorA", LocalDate.now(), new BigDecimal(4));
+		Book book2 = new Book("BookB", "AuthorB", LocalDate.now(), new BigDecimal(5));
+		Book book3 = new Book("BookC", "AuthorC", LocalDate.now(), new BigDecimal(6));
+		Book book4 = new Book("BookD", "AuthorD", LocalDate.now(), new BigDecimal(9));
+		
+		book1 = entityManager.persist(book1);
+		book2 = entityManager.persist(book2);
+		book3 = entityManager.persist(book3);
+		book4 = entityManager.persist(book4);
+		entityManager.flush();
+		
+		Pageable pageable = PageRequest.of(0,  50, Sort.Direction.DESC, "publishedDate");
+		
+		
+		GetAllBooksRequest bookRequest = new GetAllBooksRequest();
+		bookRequest.setAuthorFilter("utho");				
+		List<Book> books = bookRepository.findAllBooksWithPagination(bookRequest, pageable);
+		assertThat(books.size()).isEqualTo(4);
+	
+		GetAllBooksRequest bookRequest3 = new GetAllBooksRequest();
+		bookRequest3.setMaxPriceFilter(new BigDecimal(6));
+		bookRequest3.setMinPriceFilter(new BigDecimal(3));
+		List<Book> books3 = bookRepository.findAllBooksWithPagination(bookRequest3, pageable);
+		assertThat(books3.size()).isEqualTo(3);
+		
+		
+	}
 	
 	@Test
 	public void whenFindByIdIn() {

@@ -28,13 +28,12 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Book> query = cb.createQuery(Book.class);
 		
-		Root<Book> book = query.from(Book.class);
-			
+		Root<Book> book = query.from(Book.class);			
 		
 		List<Predicate> predicates = new ArrayList<>();
 		
 		if(bookRequest.getAuthorFilter() != null && bookRequest.getAuthorFilter().trim().length()>0)
-			predicates.add(cb.like(book.get("author"), bookRequest.getAuthorFilter()));
+			predicates.add(cb.like(book.get("author"), "%"+bookRequest.getAuthorFilter()+"%"));
 		
 		if(bookRequest.getNameFilter() != null && bookRequest.getNameFilter().trim().length()>0)
 			predicates.add(cb.like(book.get("name"), bookRequest.getNameFilter()));		
