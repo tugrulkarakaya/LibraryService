@@ -32,6 +32,9 @@ public class CreateOrEditBook {
 	@NotNull
 	private BigDecimal price;
 
+	public CreateOrEditBook() {
+		// TODO Auto-generated constructor stub
+	}
 	public Long getId() {
 		return id;
 	}
@@ -76,5 +79,16 @@ public class CreateOrEditBook {
 	public String toString() {
 		return "CreateOrEditBook [id=" + id + ", author=" + author + ", name=" + name + ", publishedDate="
 				+ publishedDate + ", price=" + price + "]";
-	}	
+	}
+
+	public CreateOrEditBook(Long id, String author, String name, LocalDate publishedDate, BigDecimal price) {
+		super();
+		this.id = id;
+		this.author = author;
+		this.name = name;
+		this.publishedDate = publishedDate;
+		this.price = price;
+	}
+	
+	
 }

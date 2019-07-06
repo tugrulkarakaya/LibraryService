@@ -10,6 +10,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import com.library.LibraryService.payload.EntityImpl;
 
 public class BookResponse extends EntityImpl<Long> {
@@ -20,6 +23,7 @@ public class BookResponse extends EntityImpl<Long> {
 	
 	private String author;
 	
+	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate publishedDate;
 	
 	private BigDecimal price;

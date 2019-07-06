@@ -145,9 +145,7 @@ public class BookRepositorytest {
 		bookRequest3.setMaxPriceFilter(new BigDecimal(6));
 		bookRequest3.setMinPriceFilter(new BigDecimal(3));
 		List<Book> books3 = bookRepository.findAllBooksWithPagination(bookRequest3, pageable);
-		assertThat(books3.size()).isEqualTo(3);
-		
-		
+		assertThat(books3.size()).isEqualTo(3);			
 	}
 	
 	@Test

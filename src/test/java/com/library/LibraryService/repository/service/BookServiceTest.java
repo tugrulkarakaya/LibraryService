@@ -31,11 +31,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.library.LibraryService.common.Constants;
+import com.library.LibraryService.controller.BookController;
 import com.library.LibraryService.exception.LibraryAppException;
 import com.library.LibraryService.model.Book;
 import com.library.LibraryService.payload.EntityDefaultImp;
 import com.library.LibraryService.payload.PagedResponse;
 import com.library.LibraryService.payload.book.BookResponse;
+import com.library.LibraryService.payload.book.CreateOrEditBook;
 import com.library.LibraryService.payload.book.GetAllBooksRequest;
 import com.library.LibraryService.repository.BookRepository;
 import com.library.LibraryService.service.BookService;
@@ -71,6 +73,9 @@ public class BookServiceTest {
 	@MockBean
 	private BookRepository bookRepository;
 	
+	Book bookCreate = null;
+	Book bookCreate2 = null;
+	
 	@Before
 	public void setUp() {
 		Book book1 = new Book("Book Name1", "Book Author1", LocalDate.of(2011, 12, 15), new BigDecimal(40));
@@ -83,7 +88,11 @@ public class BookServiceTest {
 		book4.setId(4L);
 		Book book5 = new Book("Book Name5", "Book Author2", LocalDate.of(2011, 12, 19), new BigDecimal(80));
 		book5.setId(5L);
-			
+				
+		bookCreate = new Book("New Book", "New Author",LocalDate.of(2000, 11, 28), new BigDecimal(9));
+		bookCreate2 = new Book("New Book", "New Author",LocalDate.of(2000, 11, 28), new BigDecimal(9));
+		bookCreate2.setId(9999L);
+
 	    Mockito.when(bookRepository.findById(book1.getId())).thenReturn(Optional.of(book1));
 	    Mockito.when(bookRepository.findById(book2.getId())).thenReturn(Optional.of(book2));
 	    Mockito.when(bookRepository.findById(book3.getId())).thenReturn(Optional.of(book3));
@@ -104,7 +113,7 @@ public class BookServiceTest {
 	    books3.addAll(books1); books3.addAll(books2);	    
 	    Mockito.when(bookRepository.findAllBooksWithPagination(any(), any())).thenReturn(books3);
 	    
-	    
+	    Mockito.when(bookRepository.save(any())).thenReturn(bookCreate2);
 	}	
 	
 	@Test
@@ -115,6 +124,13 @@ public class BookServiceTest {
 		BookResponse found = bookService.getBook(entity);
 		
 		assertThat(found.getName()).isEqualTo("Book Name1");
+	}
+	
+	@Test
+	public void testCreateBook() {
+		
+		BookResponse found = bookService.createOrEditBook(new CreateOrEditBook());		
+		assertThat(found.getName()).isEqualTo(bookCreate.getName());
 	}
 	
 	@Test
