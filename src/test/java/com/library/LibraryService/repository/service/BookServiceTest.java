@@ -30,6 +30,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.library.LibraryService.common.Constants;
 import com.library.LibraryService.exception.LibraryAppException;
 import com.library.LibraryService.model.Book;
 import com.library.LibraryService.payload.EntityDefaultImp;
@@ -136,8 +137,8 @@ public class BookServiceTest {
 	@Test
 	public void testPaginationException() {
 		try{
-			//make page size 100 which exceeds page size 50 and validate exception type
-			PagedResponse<BookResponse> foundByAuthor2 =  bookService.getBooksByAuthor("Book Author1", 1, 100);
+			//make page size 1 more then maxpagesize which exceeds page size 50 and validate exception type
+			PagedResponse<BookResponse> foundByAuthor2 =  bookService.getBooksByAuthor("Book Author1", 1, Constants.MAX_PAGE_SIZE+1);
 		} catch(Exception ex)
 		{
 			assertTrue(ex instanceof LibraryAppException);
