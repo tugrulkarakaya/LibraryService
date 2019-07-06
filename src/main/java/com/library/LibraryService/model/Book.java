@@ -2,6 +2,8 @@ package com.library.LibraryService.model;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,11 +22,15 @@ public class Book {
 	private Long id;
 	
 	@NotBlank
+	@Size(max = 500)
+	private String name;
+	
+	@NotBlank
 	@Size(max = 75)
 	private String author;
 	
 	@NotNull
-	private Instant publishedDate;
+	private LocalDate publishedDate;
 	
 	@NotNull
 	private BigDecimal price;
@@ -32,15 +38,15 @@ public class Book {
 	public Book() {
 		
 	}
-
 	
-	public Book(@NotBlank @Size(max = 75) String author, @NotNull Instant publishedDate, @NotNull BigDecimal price) {
+	public Book(@NotBlank @Size(max = 500) String name, @NotBlank @Size(max = 75) String author,
+			@NotNull LocalDate publishedDate, @NotNull BigDecimal price) {
 		super();
+		this.name = name;
 		this.author = author;
 		this.publishedDate = publishedDate;
 		this.price = price;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -58,11 +64,11 @@ public class Book {
 		this.author = author;
 	}
 
-	public Instant getPublishedDate() {
+	public LocalDate getPublishedDate() {
 		return publishedDate;
 	}
 
-	public void setPublishedDate(Instant publishedDate) {
+	public void setPublishedDate(LocalDate publishedDate) {
 		this.publishedDate = publishedDate;
 	}
 
@@ -75,10 +81,23 @@ public class Book {
 	}
 
 
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", author=" + author + ", publishedDate=" + publishedDate + ", price=" + price + "]";
+		return "Book [id=" + id + ", name=" + name + ", author=" + author + ", publishedDate=" + publishedDate
+				+ ", price=" + price + "]";
 	}
+
+
 
 	
 	
