@@ -32,7 +32,7 @@ public class BookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 	
-	@PostMapping("/save")	
+	@PostMapping()	
 	public BookResponse CreateOrEditBook(CreateOrEditBook book) {
 		return bookService.createOrEditBook(book);
 	}
@@ -42,6 +42,7 @@ public class BookController {
 		return bookService.getBook(input);
 	}
 	
+	@GetMapping("/pricerange")
 	public PagedResponse<BookResponse> GetBookByPriceRange(@RequestParam String lowPrice, @RequestParam String highPrice, 
 												  @RequestParam(value = "page", defaultValue = Constants.PAGE_NUMBER) int page,
 												  @RequestParam(value = "size", defaultValue = Constants.PAGE_SIZE) int size){
@@ -50,7 +51,7 @@ public class BookController {
 	}
 	
 	@DeleteMapping
-	public void DeleteBook(@RequestParam EntityDefaultImp input) {
+	public void DeleteBook(EntityDefaultImp input) {
 		bookService.deleteBook(input);
 	}
 	
@@ -61,7 +62,8 @@ public class BookController {
 		return bookService.getBooksByAuthor(author, page, size);
 	}
 	
-	public List<BookResponse> GetAll(@RequestParam GetAllBooksRequest input,
+	@GetMapping("/books")
+	public List<BookResponse> GetAll(GetAllBooksRequest input,
 											  @RequestParam(value = "page", defaultValue = Constants.PAGE_NUMBER) int page,
 											  @RequestParam(value = "size", defaultValue = Constants.PAGE_SIZE) int size){
 		return bookService.getAllBooks(input, page, size);

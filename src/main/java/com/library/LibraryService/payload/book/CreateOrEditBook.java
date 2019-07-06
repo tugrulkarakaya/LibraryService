@@ -1,7 +1,7 @@
 package com.library.LibraryService.payload.book;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDate;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class CreateOrEditBook {
 	
@@ -18,8 +21,13 @@ public class CreateOrEditBook {
 	@Size(max = 75)
 	private String author;
 	
+	@NotBlank
+	@Size(max = 500)
+	private String name;
+	
 	@NotNull
-	private Instant publishedDate;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate publishedDate;
 	
 	@NotNull
 	private BigDecimal price;
@@ -40,11 +48,11 @@ public class CreateOrEditBook {
 		this.author = author;
 	}
 
-	public Instant getPublishedDate() {
+	public LocalDate getPublishedDate() {
 		return publishedDate;
 	}
 
-	public void setPublishedDate(Instant publishedDate) {
+	public void setPublishedDate(LocalDate publishedDate) {
 		this.publishedDate = publishedDate;
 	}
 
@@ -56,11 +64,21 @@ public class CreateOrEditBook {
 		this.price = price;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		return "CreateOrEditBook [id=" + id + ", author=" + author + ", publishedDate=" + publishedDate + ", price="
-				+ price + "]";
+		return "CreateOrEditBook [id=" + id + ", author=" + author + ", name=" + name + ", publishedDate="
+				+ publishedDate + ", price=" + price + "]";
 	}
+
+	
 	
 	
 }
