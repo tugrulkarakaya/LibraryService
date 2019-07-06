@@ -89,5 +89,31 @@ public class BookRepositorytest {
 		assertThat(found.getTotalElements()).isGreaterThanOrEqualTo(1);
 		assertThat(found2.getTotalElements()).isEqualTo(0);
 		
-	}	
+	}
+	
+	@Test
+	public void whenFindByPriceBetween() {
+		Book book1 = new Book("Book1", "Author1", LocalDate.now(), new BigDecimal(400));
+		Book book2 = new Book("Book1", "Author1", LocalDate.now(), new BigDecimal(500));
+		Book book3 = new Book("Book1", "Author1", LocalDate.now(), new BigDecimal(600));
+		Book book4 = new Book("Book1", "Author1", LocalDate.now(), new BigDecimal(900));
+		
+		book1 = entityManager.persist(book1);
+		book2 = entityManager.persist(book2);
+		book3 = entityManager.persist(book3);
+		book4 = entityManager.persist(book4);
+		
+		entityManager.flush();
+		
+		Pageable pageable = PageRequest.of(1,  100, Sort.Direction.DESC, "publishedDate");
+		
+		Page<Book> founds1 = bookRepository.findByPriceBetween(new BigDecimal(450), new BigDecimal(650), pageable);
+		Page<Book> founds2 = bookRepository.findByPriceBetween(new BigDecimal(350), new BigDecimal(950), pageable);
+		Page<Book> founds3 = bookRepository.findByPriceBetween(new BigDecimal(150), new BigDecimal(350), pageable);
+						
+		assertThat(founds1.getTotalElements()).isEqualTo(2);
+		assertThat(founds2.getTotalElements()).isEqualTo(4);
+		assertThat(founds3.getTotalElements()).isEqualTo(0);
+		
+	}
 }
