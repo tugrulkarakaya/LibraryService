@@ -95,6 +95,13 @@
 	    <version>1.4.199</version>
 	</dependency>
 
+	<!-- Added for object mapping -->
+	<dependency>
+	  <groupId>net.sf.dozer</groupId>
+	  <artifactId>dozer</artifactId>
+	  <version>5.5.1</version>
+	</dependency>
+	
   </dependencies>
 
   <repositories>

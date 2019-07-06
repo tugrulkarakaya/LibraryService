@@ -3,18 +3,25 @@ package com.library.LibraryService.payload.book;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.library.LibraryService.payload.EntityImpl;
-
-public class BookResponse extends EntityImpl<Long> {
+public class CreateOrEditBook {
 	
 	private Long id;
 	
+	@NotBlank
+	@Size(max = 75)
 	private String author;
 	
+	@NotNull
 	private Instant publishedDate;
 	
+	@NotNull
 	private BigDecimal price;
 
 	public Long getId() {
@@ -47,6 +54,12 @@ public class BookResponse extends EntityImpl<Long> {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return "CreateOrEditBook [id=" + id + ", author=" + author + ", publishedDate=" + publishedDate + ", price="
+				+ price + "]";
 	}
 	
 	
