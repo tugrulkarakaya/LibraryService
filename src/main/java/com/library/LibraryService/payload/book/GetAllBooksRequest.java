@@ -9,6 +9,8 @@ public class GetAllBooksRequest {
 	
 	private String authorFilter;
 	
+	private String nameFilter;
+	
 	private Instant minPublishedDateFilter;
 	
 	private Instant maxPublishedDateFilter;
@@ -63,5 +65,15 @@ public class GetAllBooksRequest {
 
 	public void setMaxPriceFilter(BigDecimal maxPriceFilter) {
 		this.maxPriceFilter = maxPriceFilter;
+	}
+
+	public String getNameFilter() {
+		return nameFilter;
+	}
+
+	public void setNameFilter(String nameFilter) {
+		this.nameFilter = nameFilter;
 	}	
+	
+	
 }
