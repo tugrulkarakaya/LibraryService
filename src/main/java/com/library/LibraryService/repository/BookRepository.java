@@ -11,10 +11,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.domain.Sort;
 import com.library.LibraryService.model.Book;
 
-public interface BookRepository extends JpaRepository<Book, Long>{
-	Optional<Book> findById(Long bookId);
-
-    Page<Book> findByAuthor(String author, Pageable pageable);
+public interface BookRepository extends JpaRepository<Book, Long>, BookRepositoryCustom {
+	Optional<Book> findById(Long bookId);	
+	
+	Page<Book> findByAuthor(String author, Pageable pageable);
     
     Page<Book> findByPriceBetween(BigDecimal lowPrice, BigDecimal highPrice, Pageable pageable);
 

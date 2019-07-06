@@ -1,9 +1,9 @@
 package com.library.LibraryService.service;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,9 +69,10 @@ public class BookServiceImp implements BookService {
 	}
 
 	@Override
-	public PagedResponse<BookResponse> getAllBooks(GetAllBooksRequest input, int page, int size) {
-		
-		return null;
+	public List<BookResponse> getAllBooks(GetAllBooksRequest input, int page, int size) {
+		Pageable pageable = PageRequest.of(page,  size, Sort.Direction.DESC, "publishedDate");		
+		List<Book> books =  bookRepository.findAllBooksWithPagination(input, pageable);			
+		return books.stream().map(b -> mapper.map(b, BookResponse.class)).collect(Collectors.toList());				
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class BookServiceImp implements BookService {
 		Page<Book> books = bookRepository.findByAuthor(author, pageable);
 		
 		if(books.getNumberOfElements() == 0) {
-			return new PagedResponse(Collections.<BookResponse>emptyList() ,books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(),books.isLast());			
+			return new PagedResponse<BookResponse>(Collections.<BookResponse>emptyList() ,books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(),books.isLast());			
 		}
 		
 		List<BookResponse> bookResponse = books.map(b -> mapper.map(b, BookResponse.class)).getContent();		
@@ -102,12 +103,11 @@ public class BookServiceImp implements BookService {
 		Page<Book> books = bookRepository.findByPriceBetween(lowPrice, highPrice, pageable);
 		
 		if(books.getNumberOfElements() == 0) {
-			return new PagedResponse(Collections.<BookResponse>emptyList() ,books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(),books.isLast());			
+			return new PagedResponse<BookResponse>(Collections.<BookResponse>emptyList() ,books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(),books.isLast());			
 		}
 		
 		List<BookResponse> bookResponse = books.map(b -> mapper.map(b, BookResponse.class)).getContent();		
-		return new PagedResponse<BookResponse>(bookResponse, books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(), books.isLast());
-		
+		return new PagedResponse<BookResponse>(bookResponse, books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(), books.isLast());		
 	}
 
 	private void checkPagination(int page, int size) {

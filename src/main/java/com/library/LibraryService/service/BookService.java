@@ -1,6 +1,7 @@
 package com.library.LibraryService.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ public interface BookService {
 	
 	BookResponse deleteBook(EntityDefaultImp input);
 	
-	PagedResponse<BookResponse> getAllBooks(GetAllBooksRequest input, int page, int size);
+	List<BookResponse> getAllBooks(GetAllBooksRequest input, int page, int size);
 	
 	PagedResponse<BookResponse> getBooksByAuthor(String author, int page, int size);
 	
