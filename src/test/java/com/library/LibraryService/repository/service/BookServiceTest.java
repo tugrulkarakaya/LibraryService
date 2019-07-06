@@ -113,7 +113,9 @@ public class BookServiceTest {
 	    books3.addAll(books1); books3.addAll(books2);	    
 	    Mockito.when(bookRepository.findAllBooksWithPagination(any(), any())).thenReturn(books3);
 	    
+	    
 	    Mockito.when(bookRepository.save(any())).thenReturn(bookCreate2);
+	    Mockito.when(bookRepository.findByPriceBetween(any(), any(), any())).thenReturn(pageBook);
 	}	
 	
 	@Test
@@ -127,7 +129,7 @@ public class BookServiceTest {
 	}
 	
 	@Test
-	public void testCreateBook() {
+	public void testCreateUpdateBook() {
 		
 		BookResponse found = bookService.createOrEditBook(new CreateOrEditBook());		
 		assertThat(found.getName()).isEqualTo(bookCreate.getName());
@@ -141,6 +143,11 @@ public class BookServiceTest {
 		
 		assertThat(founds.size()).isEqualTo(5);
 	}
+	
+	@Test
+	public void testGetbookByPriceRange() {
+		PagedResponse<BookResponse> pagedBooks = bookService.getBooksByPriceRange(new BigDecimal(0), new BigDecimal(1000), 1, 30);
+		assertThat(pagedBooks.getContent().size()).isEqualTo(3);	}
 	
 	@Test
 	public void testGetBooksByAuthor() {
