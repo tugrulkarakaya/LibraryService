@@ -70,16 +70,16 @@ public class BookServiceImp implements BookService {
 
 	@Override
 	public List<BookResponse> getAllBooks(GetAllBooksRequest input, int page, int size) {
-		Pageable pageable = PageRequest.of(page,  size, Sort.Direction.DESC, "publishedDate");		
+		Pageable pageable = PageRequest.of(page-1,  size, Sort.Direction.DESC, "publishedDate");		
 		List<Book> books =  bookRepository.findAllBooksWithPagination(input, pageable);			
 		return books.stream().map(b -> mapper.map(b, BookResponse.class)).collect(Collectors.toList());				
 	}
 
 	@Override
 	public PagedResponse<BookResponse> getBooksByAuthor(String author, int page, int size) {
-		checkPagination(page, size);
+		checkPagination(page-1, size);
 		
-		Pageable pageable = PageRequest.of(page,  size, Sort.Direction.DESC, "author");
+		Pageable pageable = PageRequest.of(page-1,  size, Sort.Direction.DESC, "author");
 		Page<Book> books = bookRepository.findByAuthor(author, pageable);
 		
 		if(books.getNumberOfElements() == 0) {
@@ -97,9 +97,9 @@ public class BookServiceImp implements BookService {
 			throw new LibraryAppException("Price range parameters is not correct. lowPrice must be equal or less than highPrice");
 		}
 		
-		checkPagination(page, size);
+		checkPagination(page-1, size);
 		
-		Pageable pageable = PageRequest.of(page,  size, Sort.Direction.ASC, "price");
+		Pageable pageable = PageRequest.of(page-1,  size, Sort.Direction.ASC, "price");
 		Page<Book> books = bookRepository.findByPriceBetween(lowPrice, highPrice, pageable);
 		
 		if(books.getNumberOfElements() == 0) {
@@ -112,7 +112,7 @@ public class BookServiceImp implements BookService {
 
 	private void checkPagination(int page, int size) {
         if(page < 0) {
-            throw new LibraryAppException("Page number must be greater than zero.");
+            throw new LibraryAppException("Page number must be equal or greater than one.");
         }
 
         if(size > Constants.MAX_PAGE_SIZE) {

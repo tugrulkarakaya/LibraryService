@@ -76,9 +76,5 @@ public class CreateOrEditBook {
 	public String toString() {
 		return "CreateOrEditBook [id=" + id + ", author=" + author + ", name=" + name + ", publishedDate="
 				+ publishedDate + ", price=" + price + "]";
-	}
-
-	
-	
-	
+	}	
 }

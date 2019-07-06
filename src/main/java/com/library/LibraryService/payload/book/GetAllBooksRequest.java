@@ -1,7 +1,10 @@
 package com.library.LibraryService.payload.book;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class GetAllBooksRequest {
 	
@@ -11,9 +14,11 @@ public class GetAllBooksRequest {
 	
 	private String nameFilter;
 	
-	private Instant minPublishedDateFilter;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate minPublishedDateFilter;
 	
-	private Instant maxPublishedDateFilter;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate maxPublishedDateFilter;
 	
 	private BigDecimal minPriceFilter;
 	
@@ -35,19 +40,19 @@ public class GetAllBooksRequest {
 		this.authorFilter = authorFilter;
 	}
 
-	public Instant getMinPublishedDateFilter() {
+	public LocalDate getMinPublishedDateFilter() {
 		return minPublishedDateFilter;
 	}
 
-	public void setMinPublishedDateFilter(Instant minPublishedDateFilter) {
+	public void setMinPublishedDateFilter(LocalDate minPublishedDateFilter) {
 		this.minPublishedDateFilter = minPublishedDateFilter;
 	}
 
-	public Instant getMaxPublishedDateFilter() {
+	public LocalDate getMaxPublishedDateFilter() {
 		return maxPublishedDateFilter;
 	}
 
-	public void setMaxPublishedDateFilter(Instant maxPublishedDateFilter) {
+	public void setMaxPublishedDateFilter(LocalDate maxPublishedDateFilter) {
 		this.maxPublishedDateFilter = maxPublishedDateFilter;
 	}
 

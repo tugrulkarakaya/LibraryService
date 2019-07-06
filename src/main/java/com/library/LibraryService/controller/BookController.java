@@ -56,7 +56,7 @@ public class BookController {
 	}
 	
 	@GetMapping("/author")
-	public PagedResponse<BookResponse> GetBookById(@RequestParam String author,
+	public PagedResponse<BookResponse> GetBookByAuthor(@RequestParam String author,
 													@RequestParam(value = "page", defaultValue = Constants.PAGE_NUMBER) int page,
 													@RequestParam(value = "size", defaultValue = Constants.PAGE_SIZE) int size){
 		return bookService.getBooksByAuthor(author, page, size);
