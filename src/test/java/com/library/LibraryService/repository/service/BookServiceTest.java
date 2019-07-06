@@ -16,12 +16,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.internal.util.MockUtil.isMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.library.LibraryService.model.Book;
@@ -89,11 +95,11 @@ public class BookServiceTest {
 	    Mockito.when(bookRepository.findByAuthor("Book Author1", null)).thenReturn(pageBook);
 	    
 	    
-	    GetAllBooksRequest bookRequest = new GetAllBooksRequest();
-	    bookRequest.setFilter("Book");
+	    //GetAllBooksRequest bookRequest = new GetAllBooksRequest();
+	    //bookRequest.setFilter("Book");
 	    List<Book> books3 = new ArrayList<>();
-	    books3.addAll(books1); books3.addAll(books2);
-	    Mockito.when(bookRepository.findAllBooksWithPagination(bookRequest, null)).thenReturn(books3);
+	    books3.addAll(books1); books3.addAll(books2);	    
+	    Mockito.when(bookRepository.findAllBooksWithPagination(any(), any())).thenReturn(books3);
 	    
 	    
 	}	
@@ -106,6 +112,15 @@ public class BookServiceTest {
 		BookResponse found = bookService.getBook(entity);
 		
 		assertThat(found.getName()).isEqualTo("Book Name1");
+	}
+	
+	@Test
+	public void testGetAllBooks() {
+		GetAllBooksRequest input = new GetAllBooksRequest();
+		
+		List<BookResponse> founds = bookService.getAllBooks(input, 1, 100);
+		
+		assertThat(founds.size()).isEqualTo(5);
 	}
 
 }

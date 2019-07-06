@@ -64,9 +64,8 @@ public class BookServiceImp implements BookService {
 	}
 
 	@Override
-	public BookResponse deleteBook(EntityDefaultImp input) {
+	public void deleteBook(EntityDefaultImp input) {
 		bookRepository.deleteById(input.getId());
-		return null;
 	}
 
 	@Override

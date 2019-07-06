@@ -21,7 +21,7 @@ public interface BookService {
 	
 	BookResponse getBook(EntityDefaultImp input);
 	
-	BookResponse deleteBook(EntityDefaultImp input);
+	void deleteBook(EntityDefaultImp input);
 	
 	List<BookResponse> getAllBooks(GetAllBooksRequest input, int page, int size);
 	
