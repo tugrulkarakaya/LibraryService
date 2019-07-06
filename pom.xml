@@ -24,8 +24,7 @@
     <java.version>1.8</java.version>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
 	<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>		
-	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>	
-	<jjwt.version>0.9.0</jjwt.version>			
+	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
   </properties>
 
   <dependencies>
@@ -39,11 +38,7 @@
     <dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-data-jpa</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-security</artifactId>
-	</dependency>
+	</dependency>	
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
@@ -60,23 +55,13 @@
 		<artifactId>mysql-connector-java</artifactId>
 		<scope>runtime</scope>
 	</dependency>
-	<!-- for Json Web Tokens (JWT) -->
-	<dependency>
-		<groupId>io.jsonwebtoken</groupId>
-		<artifactId>jjwt</artifactId>
-		<version>${jjwt.version}</version>
-	</dependency>
-
+	
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-test</artifactId>
 		<scope>test</scope>
 	</dependency>
-	<dependency>
-		<groupId>org.springframework.security</groupId>
-		<artifactId>spring-security-test</artifactId>
-		<scope>test</scope>
-	</dependency>
+
 	<!-- For Java 8 Date/Time Support -->
 	<dependency>
 		<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -102,12 +87,6 @@
    		<artifactId>jackson-datatype-jsr310</artifactId>
 	</dependency>
 
-		<!-- For Working with Json Web Tokens (JWT) -->
-	<dependency>
-		<groupId>io.jsonwebtoken</groupId>
-		<artifactId>jjwt</artifactId>
-		<version>${jjwt.version}</version>
-	</dependency>
 	<!-- H2 Database Support -->
 	<dependency>
 	    <groupId>com.h2database</groupId>
