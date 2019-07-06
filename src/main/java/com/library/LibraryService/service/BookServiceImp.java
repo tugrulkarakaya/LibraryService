@@ -1,10 +1,19 @@
 package com.library.LibraryService.service;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import com.library.LibraryService.common.Constants;
+import com.library.LibraryService.exception.LibraryAppException;
 import com.library.LibraryService.exception.NotFoundResourceException;
 import com.library.LibraryService.model.Book;
 import com.library.LibraryService.payload.EntityDefaultImp;
@@ -67,15 +76,48 @@ public class BookServiceImp implements BookService {
 
 	@Override
 	public PagedResponse<BookResponse> getBooksByAuthor(String author, int page, int size) {
+		checkPagination(page, size);
 		
-		return null;
+		Pageable pageable = PageRequest.of(page,  size, Sort.Direction.DESC, "author");
+		Page<Book> books = bookRepository.findByAuthor(author, pageable);
+		
+		if(books.getNumberOfElements() == 0) {
+			return new PagedResponse(Collections.<BookResponse>emptyList() ,books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(),books.isLast());			
+		}
+		
+		List<BookResponse> bookResponse = books.map(b -> mapper.map(b, BookResponse.class)).getContent();		
+		return new PagedResponse<BookResponse>(bookResponse, books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(), books.isLast());
 	}
 
 	@Override
 	public PagedResponse<BookResponse> getBooksByPriceRange(BigDecimal lowPrice, BigDecimal highPrice, int page,
 			int size) {
+		if(lowPrice.compareTo(highPrice)>0) {
+			throw new LibraryAppException("Price range parameters is not correct. lowPrice must be equal or less than highPrice");
+		}
 		
-		return null;
+		checkPagination(page, size);
+		
+		Pageable pageable = PageRequest.of(page,  size, Sort.Direction.ASC, "price");
+		Page<Book> books = bookRepository.findByPriceBetween(lowPrice, highPrice, pageable);
+		
+		if(books.getNumberOfElements() == 0) {
+			return new PagedResponse(Collections.<BookResponse>emptyList() ,books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(),books.isLast());			
+		}
+		
+		List<BookResponse> bookResponse = books.map(b -> mapper.map(b, BookResponse.class)).getContent();		
+		return new PagedResponse<BookResponse>(bookResponse, books.getNumber(), books.getSize(), books.getTotalElements(), books.getTotalPages(), books.isLast());
+		
 	}
 
+	private void checkPagination(int page, int size) {
+        if(page < 0) {
+            throw new LibraryAppException("Page number must be greater than zero.");
+        }
+
+        if(size > Constants.MAX_PAGE_SIZE) {
+            throw new LibraryAppException("Page size must be less than " + Constants.MAX_PAGE_SIZE);
+        }
+    }
+	
 }
