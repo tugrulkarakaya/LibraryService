@@ -1,5 +1,6 @@
 package com.library.LibraryService.repository.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
@@ -10,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -19,21 +22,37 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.library.LibraryService.model.Book;
+import com.library.LibraryService.payload.EntityDefaultImp;
+import com.library.LibraryService.payload.book.BookResponse;
 import com.library.LibraryService.payload.book.GetAllBooksRequest;
 import com.library.LibraryService.repository.BookRepository;
 import com.library.LibraryService.service.BookService;
 import com.library.LibraryService.service.BookServiceImp;
 
+import junit.framework.AssertionFailedError;
 
+
+@RunWith(SpringRunner.class)
 public class BookServiceTest {
 
 	@TestConfiguration
     static class BookServiceImplTestContextConfiguration { 
         @Bean
-        public BookService pollService() {
+        public BookService bookService() {
             return new BookServiceImp();
+        }
+        
+        @Bean
+        public DozerBeanMapper dozerBeanMapper() {
+        	List<String> mappingFiles = new ArrayList();
+        	mappingFiles.add("dozerJdk8Converters.xml");
+
+        	DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
+        	dozerBeanMapper.setMappingFiles(mappingFiles);
+        	return dozerBeanMapper;
         }
     }
 	
@@ -41,7 +60,7 @@ public class BookServiceTest {
 	private BookService bookService;
 	
 	@MockBean
-	BookRepository bookRepository;
+	private BookRepository bookRepository;
 	
 	@Before
 	public void setUp() {
@@ -80,8 +99,13 @@ public class BookServiceTest {
 	}	
 	
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testGetBook() {
+		EntityDefaultImp entity = new EntityDefaultImp();
+		entity.setId(1L);
+		
+		BookResponse found = bookService.getBook(entity);
+		
+		assertThat(found.getName()).isEqualTo("Book Name1");
 	}
 
 }

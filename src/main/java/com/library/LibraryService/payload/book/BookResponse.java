@@ -1,8 +1,13 @@
 package com.library.LibraryService.payload.book;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDate;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.library.LibraryService.payload.EntityImpl;
@@ -11,11 +16,22 @@ public class BookResponse extends EntityImpl<Long> {
 	
 	private Long id;
 	
+	private String name;
+	
 	private String author;
 	
-	private Instant publishedDate;
+	private LocalDate publishedDate;
 	
 	private BigDecimal price;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -33,11 +49,11 @@ public class BookResponse extends EntityImpl<Long> {
 		this.author = author;
 	}
 
-	public Instant getPublishedDate() {
+	public LocalDate getPublishedDate() {
 		return publishedDate;
 	}
 
-	public void setPublishedDate(Instant publishedDate) {
+	public void setPublishedDate(LocalDate publishedDate) {
 		this.publishedDate = publishedDate;
 	}
 
