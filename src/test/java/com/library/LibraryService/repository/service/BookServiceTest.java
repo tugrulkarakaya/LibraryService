@@ -30,14 +30,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.library.LibraryService.exception.LibraryAppException;
 import com.library.LibraryService.model.Book;
 import com.library.LibraryService.payload.EntityDefaultImp;
+import com.library.LibraryService.payload.PagedResponse;
 import com.library.LibraryService.payload.book.BookResponse;
 import com.library.LibraryService.payload.book.GetAllBooksRequest;
 import com.library.LibraryService.repository.BookRepository;
 import com.library.LibraryService.service.BookService;
 import com.library.LibraryService.service.BookServiceImp;
-
+import static org.mockito.Mockito.*;
 import junit.framework.AssertionFailedError;
 
 
@@ -92,7 +94,7 @@ public class BookServiceTest {
 	    List<Book> books2 =  new ArrayList<Book>();
 	    books2.add(book4);books2.add(book5);	  
 	    Page<Book> pageBook = new PageImpl<Book>(books1);	    
-	    Mockito.when(bookRepository.findByAuthor("Book Author1", null)).thenReturn(pageBook);
+	    Mockito.when(bookRepository.findByAuthor(eq("Book Author1"), any())).thenReturn(pageBook);
 	    
 	    
 	    //GetAllBooksRequest bookRequest = new GetAllBooksRequest();
@@ -121,6 +123,25 @@ public class BookServiceTest {
 		List<BookResponse> founds = bookService.getAllBooks(input, 1, 100);
 		
 		assertThat(founds.size()).isEqualTo(5);
+	}
+	
+	@Test
+	public void testGetBooksByAuthor() {
+		
+		
+		PagedResponse<BookResponse> foundByAuthor =  bookService.getBooksByAuthor("Book Author1", 1, 30);		
+		assertThat(foundByAuthor.getContent().size()).isEqualTo(3);			
+	}
+	
+	@Test
+	public void testPaginationException() {
+		try{
+			//make page size 100 which exceeds page size 50 and validate exception type
+			PagedResponse<BookResponse> foundByAuthor2 =  bookService.getBooksByAuthor("Book Author1", 1, 100);
+		} catch(Exception ex)
+		{
+			assertTrue(ex instanceof LibraryAppException);
+		}	    
 	}
 
 }
