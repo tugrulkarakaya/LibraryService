@@ -13,6 +13,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import com.library.LibraryService.service.BookService;
+import com.library.LibraryService.service.BookServiceImp;
+
 @SpringBootApplication
 @EntityScan(basePackageClasses = {
 		LibraryServiceApplication.class,
@@ -30,6 +33,12 @@ public class LibraryServiceApplication {
 		dozerBeanMapper.setMappingFiles(mappingFiles);
 		return dozerBeanMapper;
 	}
+	
+	@Bean
+	public BookService bookService() {
+		return new BookServiceImp();
+	}
+	
 	@PostConstruct
 	void init() {
 		//To Eliminate any app server's time zone effect

@@ -137,12 +137,11 @@ public class BookServiceTest {
 	@Test
 	public void testPaginationException() {
 		try{
-			//make page size 1 more then maxpagesize which exceeds page size 50 and validate exception type
-			PagedResponse<BookResponse> foundByAuthor2 =  bookService.getBooksByAuthor("Book Author1", 1, Constants.MAX_PAGE_SIZE+1);
+			//make page size 1 more than maxpagesize which exceeds page size 50 and validate exception type
+			PagedResponse<BookResponse> foundByAuthor =  bookService.getBooksByAuthor("Book Author1", 1, Constants.MAX_PAGE_SIZE+1);
 		} catch(Exception ex)
 		{
 			assertTrue(ex instanceof LibraryAppException);
 		}	    
 	}
-
 }
