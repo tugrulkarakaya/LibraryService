@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "87e10b14-c9fd-4d3d-af64-613041a7f6c0",
+		"name": "SantanderExerciseTugrulKarakaya",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateBook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\"name\":\"Einstein's Relativity Theory\",\r\n\t\"author\":\"Albert Einstein\",\r\n\t\"publishedDate\":\"2017-05-07\",\r\n\t\"price\":49.99\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:1111/Book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1111",
+					"path": [
+						"Book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBook",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1111/Book?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1111",
+					"path": [
+						"Book"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateBook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\"id\":1,\r\n\t\"name\":\"Spring Unleashed\",\r\n\t\"author\":\"Tugrul Karakaya\",\r\n\t\"publishedDate\":\"2019-07-07\",\r\n\t\"price\":24.99\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:1111/Book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1111",
+					"path": [
+						"Book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteBook",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1111/Book?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1111",
+					"path": [
+						"Book"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBooksByAuthor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1111/Book/author?author=lbert&page=1&size=30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1111",
+					"path": [
+						"Book",
+						"author"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "lbert"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1111/Book/books?authorFilter=ber&filter=inste&maxPriceFilter=1000&maxPublishedDateFilter=2020-07-25&minPriceFilter=0&minPublishedDateFilter=1981-02-24&nameFilter=Ein&page=1&size=30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1111",
+					"path": [
+						"Book",
+						"books"
+					],
+					"query": [
+						{
+							"key": "authorFilter",
+							"value": "ber"
+						},
+						{
+							"key": "filter",
+							"value": "inste",
+							"description": "this filter is applied to name and author (all string fields)"
+						},
+						{
+							"key": "maxPriceFilter",
+							"value": "1000",
+							"description": "all filters are (for this exercise) are concetaneted with OR. in real world they must be AND so you can change your query by adding new books to test"
+						},
+						{
+							"key": "maxPublishedDateFilter",
+							"value": "2020-07-25"
+						},
+						{
+							"key": "minPriceFilter",
+							"value": "0"
+						},
+						{
+							"key": "minPublishedDateFilter",
+							"value": "1981-02-24"
+						},
+						{
+							"key": "nameFilter",
+							"value": "Ein"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByPriceRange",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1111/Book/pricerange?highPrice=1000&lowPrice=5&page=1&size=30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1111",
+					"path": [
+						"Book",
+						"pricerange"
+					],
+					"query": [
+						{
+							"key": "highPrice",
+							"value": "1000"
+						},
+						{
+							"key": "lowPrice",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WrongPaginationExceptionMessage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1111/Book/pricerange?highPrice=1000&lowPrice=5&page=1&size=75",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1111",
+					"path": [
+						"Book",
+						"pricerange"
+					],
+					"query": [
+						{
+							"key": "highPrice",
+							"value": "1000"
+						},
+						{
+							"key": "lowPrice",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "75"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

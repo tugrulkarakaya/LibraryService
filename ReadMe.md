@@ -42,7 +42,31 @@ I have just added one Exception testing
 ### Framework Used
 Springboot current version at the given date above
 
-## Steps to Test
-1- You can use Swahger UI from the linke given above
-2- You can use Postman file in the project
+## Test Steps
+* You can use Swager UI from the link given above [Swagger UI](http://localhost:1111/swagger-ui.html)
+* You can Run in your postman [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32843d9e1fb14fcd5f2a) https://www.getpostman.com/collections/32843d9e1fb14fcd5f2a 
+* You can use Postman file in the project (see the root directory and open PostmanCollection.json with your postman
+
+### Create a Book or more
+create lots of book to be able to test better. Do not add "Id" to json payload.
+
+### Get book with id (1)
+get any book wth different IDs
+
+### Update Book
+Update any book with the same (create) post but add id to payload json object. it will be updated
+
+### Get book with id (2)
+
+### GetAll
+There lots of parameters in this call. I suggest you to use just one of them at the same time. Filter field is applied to name or author (OR). For this exercise all fields are binded each other with OR but in real worlkd they should be AND for meaningful filterin especially from UI side
+
+### Delete Book id (1)
+
+
+### Get Books by Price Range and see pagination info
+
+### WrongPaginationExceptionMessage 
+If you require 75 per record per page it wont be executed. You will see the exception message (very basic implementation)
+
 
