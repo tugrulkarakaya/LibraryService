@@ -39,6 +39,9 @@ For Repository and Service layer I tried to add as much as possible unit tests. 
 
 I have just added one Exception testing
 
+* **Database**
+H2 in memory Db is used. you can see table at [H2 Database page](http://localhost:1111/h2-console/) http://localhost:1111/h2-console/
+
 ### Framework Used
 Springboot current version at the given date above
 
