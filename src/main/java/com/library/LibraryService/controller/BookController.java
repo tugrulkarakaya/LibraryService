@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ public class BookController {
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 	
 	@PostMapping()	
-	public BookResponse CreateOrEditBook(CreateOrEditBook book) {
+	public BookResponse CreateOrEditBook(@RequestBody CreateOrEditBook book) {
 		return bookService.createOrEditBook(book);
 	}
 	
@@ -60,7 +61,7 @@ public class BookController {
 													@RequestParam(value = "page", defaultValue = Constants.PAGE_NUMBER) int page,
 													@RequestParam(value = "size", defaultValue = Constants.PAGE_SIZE) int size){
 		return bookService.getBooksByAuthor(author, page, size);
-	}
+	}	
 	
 	@GetMapping("/books")
 	public List<BookResponse> GetAll(GetAllBooksRequest input,

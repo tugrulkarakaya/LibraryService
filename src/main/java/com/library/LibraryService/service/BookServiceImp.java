@@ -34,7 +34,7 @@ public class BookServiceImp implements BookService {
 	
 	@Override
 	public BookResponse createOrEditBook(CreateOrEditBook book) {
-		if(book.getId() == null) {
+		if(book.getId() == null || book.getId()==0) {
 			//Create new Book
 			return create(book);
 		}
